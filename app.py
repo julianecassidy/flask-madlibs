@@ -1,12 +1,24 @@
 from flask import Flask, render_template, request
 from flask_debugtoolbar import DebugToolbarExtension
 
-from stories import silly_story
+from stories import silly_story, excited_story
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "secret"
 
 debug = DebugToolbarExtension(app)
+
+LIST_OF_STORIES = [silly_story, excited_story]
+
+@app.get('/')
+def show_dropdown_form():
+    """showing story options in an html dropdown"""
+
+    return render_template(
+        "dropdown.html",
+        stories = LIST_OF_STORIES
+)
+
 
 @app.get('/questions')
 def create_question_form():
@@ -17,7 +29,7 @@ def create_question_form():
 
     return render_template(
         "questions.html",
-        prompts = silly_story.prompts
+        prompts = request.args["prompts"]
     )
 
 @app.get('/results')
