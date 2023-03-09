@@ -25,7 +25,7 @@ class Story:
         self.template = text #"I love to {verb} a good {noun}."
 
     def generate(self, answers):
-        """Substitute answers into text."""
+        """Substitute answers into text. Pass in a dictionary"""
 
         text = self.template
 
